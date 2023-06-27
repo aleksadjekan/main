@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-project",
-    "slug": "react-native-project",
+    "name": "Zoo Panda",
+    "slug": "Zoo Panda",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
