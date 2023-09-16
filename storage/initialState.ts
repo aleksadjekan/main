@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { User, UserType } from "./types";
 
 const user1: User = {
@@ -41,10 +42,42 @@ const user4: User = {
 const users = [user1, user2, user3, user4]
 
 export const initalLocalStorage = () => {
-    localStorage.setItem('users', JSON.stringify(users))
+    AsyncStorage.setItem('users', JSON.stringify(users))
 }
-export const getUsers = (): User[] => {
-    const users = localStorage.getItem('users');
+export const getUsers = async (): Promise<User[]> => {
+    const users = await AsyncStorage.getItem('users');
     return users ? JSON.parse(users) as User[] : []
 }
 
+export const getUserByUsername = async (username: string): Promise<User | undefined> => {
+    const users = await AsyncStorage.getItem('users');
+    const usersParsed = JSON.parse(users) as User[]
+    return usersParsed.find(u => u.username === username);
+}
+
+
+export const getLoggedInUser = async (): Promise<User> => {
+    const user = await AsyncStorage.getItem('loginUser');
+    return JSON.parse(user) as User;
+}
+
+export const setLoggedInUser = async (user: User): Promise<boolean> => {
+    if (typeof user !== 'undefined') {
+        await AsyncStorage.setItem('loginUser', JSON.stringify(user))
+        return true;
+    } else return false;
+}
+
+export const logoutUser = async () => {
+    await AsyncStorage.removeItem('loginUser');
+}
+
+export const updateUser = async (user: User) => {
+    const users = await AsyncStorage.getItem('users');
+    const usersParsed = JSON.parse(users) as User[]
+    const idx = usersParsed.findIndex(u => u.username === user.username);
+    if (idx !== -1) {
+        usersParsed[idx] = user;
+        await AsyncStorage.setItem('users', JSON.stringify(usersParsed))
+    }
+}

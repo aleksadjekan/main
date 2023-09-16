@@ -1,20 +1,14 @@
-import { getUsers } from "./initialState"
-export enum LoginResponse {
-    Success,
-    Error
+import { getUsers, logoutUser, setLoggedInUser } from "./initialState"
+export const LoginResponse = {
+    Success: 0,
+    Error: 1
 }
-
-export const loginUser = (username: string, password: string): LoginResponse => {
-    const users = getUsers();
+export const loginUser = async (username, password) => {
+    const users = await getUsers();
     const idx = users.findIndex(user => user.username === username && user.password === password)
-    if (idx !== -1) {
-        localStorage.setItem('loginUser', JSON.stringify(users[idx]))
-        return LoginResponse.Success;
-    }
-    return LoginResponse.Error;
+    return await setLoggedInUser(users[idx]) ? LoginResponse.Success : LoginResponse.Error;
 }
-export const logout = (navigation) => {
+export const logout = async (navigation) => {
     navigation.navigate('Login');
-    localStorage.removeItem('loginUser');
-
+    await logoutUser()
 }

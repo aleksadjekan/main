@@ -4,9 +4,6 @@ import { logout } from '../storage/actions';
 
 const HomePage = ({ navigation }) => {
 
-  setTimeout(() => {
-    logout(navigation)
-  }, 1000);
 
   return (
     <View style={styles.container}>
