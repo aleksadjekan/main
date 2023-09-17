@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { logout } from '../storage/actions';
+import UserContext from '../storage/dataContext';
+import React from 'react';
 
 const HomePage = ({ navigation }) => {
-
 
   return (
     <View style={styles.container}>

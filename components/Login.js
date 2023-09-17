@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { LoginResponse } from '../storage/actions';
-import { loginUser } from '../storage/actions';
-import { DataContext } from '../storage/dataContext';
+import { UserContext } from '../storage/dataContext';
 
 const Login = ({ navigation }) => {
-  const dataContext = React.useContext(DataContext);
+  const userContext = React.useContext(UserContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
-    console.log(dataContext);
-    const response = await loginUser(username, password);
-    if (response === LoginResponse.Success) {
+    const users = userContext.users;
+    console.log(users);
+    const idx = users.findIndex(user => user.username === username && user.password === password)
+    const response = await userContext.loginAction(users[idx]);
+    if (response) {
       navigation.navigate('HomePage');
     }
     else {

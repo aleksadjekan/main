@@ -62,8 +62,10 @@ export const getLoggedInUser = async (): Promise<User> => {
 }
 
 export const setLoggedInUser = async (user: User): Promise<boolean> => {
+    // const userContext = React.useContext(UserContext);
     if (typeof user !== 'undefined') {
         await AsyncStorage.setItem('loginUser', JSON.stringify(user))
+        // userContext.setLoginUser(user);
         return true;
     } else return false;
 }
