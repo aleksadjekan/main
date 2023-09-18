@@ -7,6 +7,8 @@ import HomePage from './components/HomePage';
 import ContactInfo from './components/ContactInfo'
 import Events from './components/Events'
 import Animals from './components/Animals'
+import Profile from './components/Profile'
+import UpdatePassword from './components/UpdatePassword'
 import LogoutHeader from './components/LogoutHeader'
 import UserContext, { UserProvider } from './storage/dataContext';
 import { initalLocalStorage } from './storage/initialState';
@@ -65,6 +67,14 @@ function MyNavigation() {
             }} />
             <Drawer.Screen name="ContactInfo" component={ContactInfo} options={{
               title: 'Contact',
+              headerRight: () => <LogoutHeader />,
+            }} />
+            <Drawer.Screen name="Profile" component={Profile} options={{
+              title: 'Profile',
+              headerRight: () => <LogoutHeader />,
+            }} />
+            <Drawer.Screen name="UpdatePassword" component={UpdatePassword} options={{
+              title: 'Change Password',
               headerRight: () => <LogoutHeader />,
             }} />
           </Drawer.Navigator>

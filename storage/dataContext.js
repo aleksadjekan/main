@@ -19,6 +19,7 @@ class UserProvider extends Component {
   setLoginUser = (user) => {
     this.setState({ ...this.state, loginUser: user })
   }
+
   async syncUsersWithStorage() {
     const users = await getUsers();
     this.setUsers(users);
@@ -43,8 +44,15 @@ class UserProvider extends Component {
       return response;
     }
     return false;
-
   }
+
+  async updateUser(user) {
+    this.setLoginUser(user);
+    this.setUsers(users);
+    await AsyncStorage.setItem('loginUser', JSON.stringify(user));
+    await AsyncStorage.setItem('users', JSON.stringify(this.users))
+  }
+
   async logoutAction() {
     this.setLoginUser({});
     await AsyncStorage.removeItem('loginUser');
@@ -53,11 +61,11 @@ class UserProvider extends Component {
   render() {
     const { children } = this.props;
     const { loginUser, users, animals } = this.state
-    const { setUsers, setLoginUser, loginAction, logoutAction } = this
+    const { setUsers, setLoginUser, loginAction, logoutAction, updateUser } = this
 
     return (
       <UserContext.Provider
-        value={{ loginUser, animals, users, setUsers, setLoginUser, loginAction, logoutAction }}
+        value={{ loginUser, animals, users, setUsers, setLoginUser, loginAction, logoutAction, updateUser }}
       >
         {children}
       </UserContext.Provider>
