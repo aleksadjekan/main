@@ -21,8 +21,7 @@ const Profile = () => {
             password: userContext.loginUser.password,
             userType: userContext.loginUser.userType
         }
-
-        await userContext.updateUser(user);
+        await userContext.updateUser(user, userContext.users);
     };
 
     return (

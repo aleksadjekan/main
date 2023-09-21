@@ -1,13 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import EventList from "./EventList";
+import NotificationList from "./NotificationList";
 import UserContext from "../storage/dataContext";
 
-const Events = () => {
+const Notification = () => {
   const userContext = React.useContext(UserContext);
+
   return (
     <View style={styles.container}>
-      <EventList events={userContext.events} />
+      <NotificationList notifications={userContext.notifications} />
     </View>
   );
 };
@@ -42,4 +43,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Events;
+export default Notification;

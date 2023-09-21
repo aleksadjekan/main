@@ -22,7 +22,7 @@ const UpdatePassword = () => {
                 password: newPassword
             }
 
-            await userContext.updateUser(user, userContext.users);
+            await userContext.updateUser(user);
         }
     };
 
