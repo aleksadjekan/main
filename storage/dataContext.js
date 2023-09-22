@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import {
+  getAnimals,
+  getComments,
   getEvents,
   getLoggedInUser,
   getNotifications,
+  getSelectedAnimal,
   getUsers,
   setLoggedInUser,
 } from "./initialState";
@@ -17,11 +20,13 @@ class UserProvider extends Component {
     users: [],
     events: [],
     notifications: [],
+    animals: [],
+    selectedAnimal: null,
+    comments: [],
   };
 
   // Method to update state
   setUsers = (users) => {
-    console.log(users);
     this.setState({ ...this.state, users: users });
   };
   setLoginUser = (user) => {
@@ -30,12 +35,27 @@ class UserProvider extends Component {
   setNotifications = (notifications) => {
     this.setState({ ...this.state, notifications: notifications });
   };
+  setEvents = (events) => {
+    this.setState({ ...this.state, events: events });
+  };
+  setAnimals = (animals) => {
+    this.setState({ ...this.state, animals: animals });
+  };
+  setSelectedAnimal = (animal) => {
+    this.setState({ ...this.state, selectedAnimal: animal });
+  };
+  setComments = (comments) => {
+    this.setState({ ...this.state, comments: comments });
+  };
 
   async syncUsersWithStorage() {
     const users = await getUsers();
     const notifications = await getNotifications();
     const loginUser = await getLoggedInUser();
     const events = await getEvents();
+    const animals = await getAnimals();
+    const selectedAnimal = await getSelectedAnimal();
+    const comments = await getComments();
 
     if (loginUser !== null) this.setLoginUser(loginUser);
     this.setState({
@@ -43,6 +63,9 @@ class UserProvider extends Component {
       loginUser: loginUser,
       notifications: notifications,
       events: events,
+      animals: animals,
+      selectedAnimal: selectedAnimal,
+      comments: comments,
     });
   }
 
@@ -54,7 +77,6 @@ class UserProvider extends Component {
     if (typeof user !== "undefined") {
       await AsyncStorage.setItem("loginUser", JSON.stringify(user));
       const response = await setLoggedInUser(user);
-      console.log(response);
       if (response) {
         this.setLoginUser(user);
       }
@@ -70,7 +92,15 @@ class UserProvider extends Component {
 
   render() {
     const { children } = this.props;
-    const { loginUser, users, notifications, events } = this.state;
+    const {
+      loginUser,
+      users,
+      notifications,
+      events,
+      animals,
+      selectedAnimal,
+      comments,
+    } = this.state;
     const {
       setUsers,
       setLoginUser,
@@ -110,6 +140,39 @@ class UserProvider extends Component {
         }
       },
     } = this;
+    const {
+      likeEvent = async (name) => {
+        const idx = this.state.events.findIndex((n) => {
+          return n.name === name;
+        });
+        if (idx !== -1) {
+          const newEvents = this.state.events;
+          newEvents[idx].num_likes++;
+          this.setEvents(newEvents);
+          await AsyncStorage.setItem("events", JSON.stringify(newEvents));
+        }
+      },
+    } = this;
+    const {
+      selectAnimal = async (animal) => {
+        this.setSelectedAnimal(animal);
+        await AsyncStorage.setItem("selectedAnimal", JSON.stringify(animal));
+      },
+    } = this;
+
+    const {
+      addComment = async (text, id, user) => {
+        const komentar = {
+          animal_id: id,
+          username: user,
+          description: text,
+        };
+        const komentari = this.state.comments;
+        komentari.unshift(komentar);
+        this.setComments(komentari);
+        await AsyncStorage.setItem("comments", JSON.stringify(komentari));
+      },
+    } = this;
 
     return (
       <UserContext.Provider
@@ -118,13 +181,19 @@ class UserProvider extends Component {
           users,
           notifications,
           events,
+          animals,
+          selectedAnimal,
+          comments,
           setUsers,
           setLoginUser,
           setNotifications,
           loginAction,
           logoutAction,
+          selectAnimal,
+          likeEvent,
           readNotification,
           updateUser,
+          addComment,
         }}
       >
         {children}

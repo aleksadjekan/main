@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import ImageGrid from "./ImageGrid";
+import AnimalGrid from "./AnimalGrid";
 
 const Animals = () => {
   return (
     <View style={styles.container}>
-      <ImageGrid />
+      <AnimalGrid />
     </View>
   );
 };

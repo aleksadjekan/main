@@ -1,23 +1,59 @@
 import React from "react";
-import { View, Text, Image, FlatList, StyleSheet } from "react-native";
-import koala from "../assets/images/koala.jpeg";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  StyleSheet,
+} from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons/faThumbsUp";
+import UserContext from "../storage/dataContext";
+
+import zoo1 from "../assets/images/zoo1.jpeg";
+import zoo2 from "../assets/images/zoo2.jpeg";
+import zoo3 from "../assets/images/zoo3.jpeg";
+import zoo4 from "../assets/images/zoo4.jpeg";
+import zoo5 from "../assets/images/zoo5.jpeg";
+import zoo6 from "../assets/images/zoo6.jpeg";
+
+const zooImages = [zoo1, zoo2, zoo3, zoo4, zoo5, zoo6];
 
 const EventList = ({ events }) => {
+  const userContext = React.useContext(UserContext);
+  const isLiked = [];
+  const like = (name) => {
+    userContext.likeEvent(name);
+    isLiked.push(name);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Events</Text>
       <FlatList
         data={events}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={styles.events}>
             <View style={styles.wrapper}>
+              <Text style={styles.name}>{item.name}</Text>
               <Image
-                source={{ uri: koala }}
+                source={{ uri: zooImages[index] }}
                 style={{ width: 200, height: 200 }}
               />
-              <Text style={styles.name}>{item.name}</Text>
             </View>
-            <Text style={styles.description}>{item.description}</Text>
+            <View>
+              <Text style={styles.description}>{item.description}</Text>
+              <Text style={styles.description}>Likes: {item.num_likes}</Text>
+              <TouchableOpacity
+                onPress={() => like(item.name)}
+                style={styles.likeButton}
+              >
+                <Text style={styles.text}>
+                  <FontAwesomeIcon icon={faThumbsUp} style={styles.icon} />
+                  Like
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
         keyExtractor={(item) => item.name}
@@ -61,10 +97,24 @@ const styles = StyleSheet.create({
   description: {
     flex: 3,
     paddingLeft: "10px",
+    maxWidth: "800px",
   },
   timestamp: {
     color: "#888888",
     marginTop: 5,
+  },
+  likeButton: {
+    marginTop: "50px",
+    marginLeft: "10px",
+  },
+  icon: {
+    color: "rgb(25, 171, 255)",
+    marginRight: 4,
+  },
+  text: {
+    color: "rgb(25, 171, 255)",
+    display: "flex",
+    alignItems: "center",
   },
 });
 

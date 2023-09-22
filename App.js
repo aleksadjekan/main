@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage";
 import ContactInfo from "./components/ContactInfo";
 import Events from "./components/Events";
 import Animals from "./components/Animals";
+import Animal from "./components/Animal";
 import Profile from "./components/Profile";
 import Notification from "./components/Notification";
 import UpdatePassword from "./components/UpdatePassword";
@@ -122,6 +123,15 @@ function MyNavigation() {
               options={{
                 drawerItemStyle: { height: 0 },
                 title: "Notification",
+                headerRight: () => <LogoutHeader />,
+              }}
+            />
+            <Drawer.Screen
+              name="Animal"
+              component={Animal}
+              options={{
+                drawerItemStyle: { height: 0 },
+                title: "Animal",
                 headerRight: () => <LogoutHeader />,
               }}
             />

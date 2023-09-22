@@ -5,9 +5,101 @@ import {
   User,
   UserType,
   Dogadjaji,
+  Animal,
+  Komenatar,
 } from "./types";
 
 import koala from "../assets/images/koala.jpeg";
+import lion from "../assets/images/lion.jpeg";
+import panda from "../assets/images/panda.jpeg";
+import slon from "../assets/images/slon.jpeg";
+import zirafa from "../assets/images/zirafa.jpeg";
+import bear from "../assets/images/bear.jpeg";
+import hipo from "../assets/images/hipo.jpeg";
+import gorila from "../assets/images/gorila.jpeg";
+import zebra from "../assets/images/zebra.jpeg";
+import snake from "../assets/images/snake.jpeg";
+import turtle from "../assets/images/turtle.jpeg";
+
+const animals: Animal[] = [
+  {
+    id: "1",
+    url: koala,
+    title: "Koala",
+    description:
+      "Koala, koji je autohton u Australiji, poznat je po svom krznu i ljubavi prema lišću eukaliptusa. Često se naziva 'koala medo', ali u stvarnosti nije medo, već torbar.",
+  },
+  {
+    id: "2",
+    url: lion,
+    title: "Lav",
+    description:
+      "Lav je divlji sisavac poznat po svojoj snazi i hrabrosti. Lavovi žive u čoporima i često su simbol moći u mnogim kulturama.",
+  },
+  {
+    id: "3",
+    url: panda,
+    title: "Panda",
+    description:
+      "Panda, koja je domaća u Kini, prepoznatljiva je po svojim crno-belim bojama i opuštenom načinu života. Ona je biljojed i posebno voli bambus.",
+  },
+  {
+    id: "4",
+    url: slon,
+    title: "Slon",
+    description:
+      "Slon je najveći kopneni sisavac na svetu. Poznat je po svojoj veličini i dugom nosu, koji nazivamo surla. Slonovi su poznati po inteligenciji i socijalnom ponašanju.",
+  },
+  {
+    id: "5",
+    url: zirafa,
+    title: "Žirafa",
+    description:
+      "Žirafa je najviša kopnena životinja na svetu. Ima dugačak vrat i karakteristične mrlje na koži. Žirafe su biljojedi i često pasu lišće sa vrhova drveća.",
+  },
+  {
+    id: "6",
+    url: bear,
+    title: "Medved",
+    description:
+      "Medved je divlji sisavac poznat po svom krznu i snažnim šapama. Postoji nekoliko vrsta medveda širom sveta, uključujući smeđe medvede i polarne medvede.",
+  },
+  {
+    id: "7",
+    url: hipo,
+    title: "Hipopotam",
+    description:
+      "Hipopotam je velika vodena životinja koja je poznata po svojoj masivnoj građi i velikim ustima. Iako deluju sporo na kopnu, hipopotami su brzi plivači.",
+  },
+  {
+    id: "8",
+    url: gorila,
+    title: "Gorila",
+    description:
+      "Gorila je veliki majmun koji živi u Africi. Mužjaci imaju karakteristične srebrne leđa. Gorile su blisko povezane sa ljudima i dele mnoge genetske sličnosti.",
+  },
+  {
+    id: "9",
+    url: zebra,
+    title: "Zebra",
+    description:
+      "Zebra je afrički kopneni sisavac poznat po svojim crno-belim prugama. One često žive u stadima i često su viđene na afričkim savanama.",
+  },
+  {
+    id: "10",
+    url: snake,
+    title: "Zmija",
+    description:
+      "Zmija je vodozemac bez nogu. Postoji mnogo različitih vrsta zmija širom sveta, od kojih su neke otrovne, dok su druge bezopasne.",
+  },
+  {
+    id: "11",
+    url: turtle,
+    title: "Kornjača",
+    description:
+      "Kornjača je vodozemac sa tvrdim oklopom koji štiti njen unutrašnji deo tela. Kornjače često žive u vodi, ali postoje i kopnene vrste.",
+  },
+];
 
 const user1: User = {
   firstName: "John",
@@ -64,37 +156,55 @@ const event1: Dogadjaji = {
   description:
     "Pridružite nam se na uzbudljivoj predstavi hranjenja životinja gde možete naučiti o ishrani različitih životinja u našem zoološkom vrtu. Približite se i lično se upoznajte sa našim stručnim čuvarima zoološkog vrta dok hrane i interaguju sa životinjama.",
   image_src: koala,
+  num_likes: 4,
 };
 const event2: Dogadjaji = {
   name: "Safari Avantura Tura",
   description:
     "Krenite na uzbudljivu safari avanturu kroz našu rezervaciju divljine. Posmatrajte veličanstvenost lava, zebri i žirafa u njihovom prirodnom staništu. Naši obučeni vodiči pružiće fascinantne uvide u ponašanje životinja.",
   image_src: koala,
+  num_likes: 23,
 };
 const event3: Dogadjaji = {
   name: "Razgovori Sa Čuvarima Životinja",
   description:
     "Prisustvujte našim informativnim razgovorima sa čuvarima zoološkog vrta kako biste dublje razumeli naše stanovnike životinjskog sveta. Naši strastveni čuvari podeliće svoje znanje i priče o životinjama kojima se brinu.",
   image_src: koala,
+  num_likes: 34,
 };
 const event4: Dogadjaji = {
   name: "Ekspedicija Za Posmatranje Ptica",
   description:
     "Istražite čuda sveta ptica u našem zoološkom vrtu tokom vođene ekspedicije za posmatranje ptica. Otkrijte raznolikost šarenih i egzotičnih vrsta ptica dok saznajete o njihovim jedinstvenim ponašanjima i staništima.",
   image_src: koala,
+  num_likes: 412,
 };
 const event5: Dogadjaji = {
   name: "Radionica Za Obogaćivanje Života Životinja",
   description:
     "Učestvujte u našoj radionici za obogaćivanje života životinja gde možete pomoći u kreiranju igračaka i aktivnosti koje će održavati mentalno i fizički stimulisane naše životinje. Naučite o važnosti obogaćivanja u brizi o životinjama.",
   image_src: koala,
+  num_likes: 224,
 };
 const event6: Dogadjaji = {
   name: "Noćno Posmatranje Noćnih Stvorenja",
   description:
     "Doživite čaroliju zoološkog vrta tokom noći tokom naše Noćne Avanture Noćnih Stvorenja. Istražite noćno ponašanje životinja poput sova, slepih miševa i noćnih sisavaca. Ponesite baterijsku lampu i budite spremni za jedinstvenu avanturu.",
   image_src: koala,
+  num_likes: 41,
 };
+const comments: Komenatar[] = [
+  {
+    animal_id: "2",
+    username: "aca",
+    description: "Divna slika koale! Obožavam ih!",
+  },
+  {
+    animal_id: "2",
+    username: "janesmith",
+    description: "Lavovi su kraljevi divljine. Impresivni su!",
+  },
+];
 
 const users = [user1, user2, user3, user4];
 const notifications = [notification1, notification2];
@@ -104,6 +214,8 @@ export const initalLocalStorage = () => {
   AsyncStorage.setItem("users", JSON.stringify(users));
   AsyncStorage.setItem("notifications", JSON.stringify(notifications));
   AsyncStorage.setItem("events", JSON.stringify(events));
+  AsyncStorage.setItem("animals", JSON.stringify(animals));
+  AsyncStorage.setItem("comments", JSON.stringify(comments));
 };
 export const getUsers = async (): Promise<User[]> => {
   const users = await AsyncStorage.getItem("users");
@@ -117,6 +229,18 @@ export const getNotifications = async (): Promise<Notification[]> => {
 export const getEvents = async (): Promise<Dogadjaji[]> => {
   const events = await AsyncStorage.getItem("events");
   return events ? (JSON.parse(events) as Dogadjaji[]) : [];
+};
+export const getAnimals = async (): Promise<Animal[]> => {
+  const animals = await AsyncStorage.getItem("animals");
+  return events ? (JSON.parse(animals) as Animal[]) : [];
+};
+export const getSelectedAnimal = async (): Promise<Animal> => {
+  const animal = await AsyncStorage.getItem("selectedAnimal");
+  return animal ? (JSON.parse(animal) as Animal) : null;
+};
+export const getComments = async (): Promise<Komenatar[]> => {
+  const comments = await AsyncStorage.getItem("comments");
+  return comments ? (JSON.parse(comments) as Komenatar[]) : null;
 };
 
 export const getUserByUsername = async (

@@ -7,6 +7,17 @@ export type User = {
   password: string;
   userType: UserType;
 };
+export type Animal = {
+  id: string;
+  url: any;
+  title: string;
+  description: string;
+};
+export type Komenatar = {
+  animal_id: string;
+  username: string;
+  description: string;
+};
 
 export enum UserType {
   Visitor,
@@ -30,4 +41,5 @@ export type Dogadjaji = {
   description: string;
   name: string;
   image_src: string;
+  num_likes: number;
 };
