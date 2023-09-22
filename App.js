@@ -18,7 +18,7 @@ import { initalLocalStorage } from "./storage/initialState";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-// initalLocalStorage();
+initalLocalStorage();
 
 class App extends React.Component {
   static contextType = UserContext;

@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     paddingHorizontal: 8,
+    minWidth: 200,
   },
   errorText: {
     color: "red",
