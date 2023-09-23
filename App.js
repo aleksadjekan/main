@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
+import AddAnimal from "./components/AddAnimal";
 import EmployeeHomePage from "./components/EmployeeHomePage";
 import ContactInfo from "./components/ContactInfo";
 import Events from "./components/Events";
@@ -20,7 +21,7 @@ import { UserType } from "./storage/types";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-initalLocalStorage();
+// initalLocalStorage();
 
 class App extends React.Component {
   static contextType = UserContext;
@@ -75,6 +76,14 @@ function HomeStack() {
             component={EmployeeHomePage}
             options={{
               title: "Home Page",
+              headerRight: () => <LogoutHeader />,
+            }}
+          />
+          <Drawer.Screen
+            name="AddAnimal"
+            component={AddAnimal}
+            options={{
+              title: "Add Animal",
               headerRight: () => <LogoutHeader />,
             }}
           />

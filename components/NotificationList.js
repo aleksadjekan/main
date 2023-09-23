@@ -21,8 +21,7 @@ const NotificationList = ({ notifications }) => {
         data={notifications}
         renderItem={({ item, index }) => (
           <View style={styles.notification}>
-            <Text>{index}</Text>
-            <Text>{item.description}</Text>
+            <Text style={styles.description}>{item.description}</Text>
             {!item.read && (
               <TouchableOpacity
                 style={styles.readButton}
@@ -61,6 +60,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     columnGap: 10,
     minWidth: 300,
+  },
+  description: {
+    maxWidth: 240,
   },
   readButton: {
     backgroundColor: "#19ABFF",

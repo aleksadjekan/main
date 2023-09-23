@@ -1,14 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import EventList from "./EventList";
 import UserContext from "../storage/dataContext";
 
 const Events = () => {
   const userContext = React.useContext(UserContext);
   return (
-    <View style={styles.container}>
-      <EventList events={userContext.events} />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <EventList events={userContext.events} />
+      </View>
+    </ScrollView>
   );
 };
 

@@ -63,9 +63,10 @@ export type Order = {
   price: string;
   username: string;
   orderStatus: OrderStatus;
+  orderID: number;
 };
 export enum OrderStatus {
-  NOT_ANSWERED,
-  CONFIRMED,
-  DECLINED,
+  NOT_ANSWERED = "Not answered",
+  CONFIRMED = "Confirmed",
+  DECLINED = "Declined",
 }

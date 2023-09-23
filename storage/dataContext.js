@@ -5,13 +5,14 @@ import {
   getEvents,
   getLoggedInUser,
   getNotifications,
+  getOrders,
   getPaketi,
   getSelectedAnimal,
   getUsers,
   setLoggedInUser,
 } from "./initialState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UserType } from "./types";
+import { OrderStatus, UserType } from "./types";
 import { Platform } from "react-native";
 
 export const UserContext = React.createContext(null);
@@ -27,6 +28,7 @@ class UserProvider extends Component {
     selectedAnimal: null,
     comments: [],
     paketi: [],
+    orders: [],
   };
 
   // Method to update state
@@ -54,6 +56,9 @@ class UserProvider extends Component {
   setPaketi = (paketi) => {
     this.setState({ ...this.state, paketi: paketi });
   };
+  setOrders = (orders) => {
+    this.setState({ ...this.state, orders: orders });
+  };
 
   async syncUsersWithStorage() {
     const users = await getUsers();
@@ -64,6 +69,7 @@ class UserProvider extends Component {
     const selectedAnimal = await getSelectedAnimal();
     const comments = await getComments();
     const paketi = await getPaketi();
+    const orders = await getOrders();
 
     if (loginUser !== null) this.setLoginUser(loginUser);
     this.setState({
@@ -75,6 +81,7 @@ class UserProvider extends Component {
       selectedAnimal: selectedAnimal,
       comments: comments,
       paketi: paketi,
+      orders: orders,
     });
   }
 
@@ -113,6 +120,7 @@ class UserProvider extends Component {
       selectedAnimal,
       comments,
       paketi,
+      orders,
     } = this.state;
     const {
       setUsers,
@@ -186,6 +194,76 @@ class UserProvider extends Component {
         await AsyncStorage.setItem("comments", JSON.stringify(komentari));
       },
     } = this;
+    const {
+      createPromotionOrder = async (promotion, price, username) => {
+        const orderId = Math.floor(Math.random() * 10000);
+        const order = {
+          description: promotion,
+          price: price,
+          username: username,
+          orderStatus: OrderStatus.NOT_ANSWERED,
+          orderId: orderId,
+        };
+        const orders = this.state.orders;
+        orders.unshift(order);
+        this.setOrders(orders);
+        await AsyncStorage.setItem("orders", JSON.stringify(orders));
+      },
+    } = this;
+
+    const {
+      createOrder = async (orderDescription, price, username) => {
+        const orderId = Math.floor(Math.random() * 10000);
+        const order = {
+          description: orderDescription,
+          price: price,
+          username: username,
+          orderStatus: OrderStatus.NOT_ANSWERED,
+          orderId: orderId,
+        };
+        const orders = this.state.orders;
+        orders.unshift(order);
+        this.setOrders(orders);
+        await AsyncStorage.setItem("orders", JSON.stringify(orders));
+      },
+    } = this;
+    const {
+      changeStatusOrder = async (id, status) => {
+        const idx = this.state.orders.findIndex((n) => {
+          return n.orderId === id;
+        });
+        if (idx !== -1) {
+          const newOrders = this.state.orders;
+          newOrders[idx].orderStatus = status;
+          this.setOrders(newOrders);
+          await AsyncStorage.setItem("orders", JSON.stringify(newOrders));
+          // make notification
+          const notificationId = Math.floor(Math.random() * 10000);
+          const notification = {
+            description:
+              "Order is " + status + " : " + newOrders[idx].description,
+            username: newOrders[idx].username,
+            read: false,
+            id: notificationId,
+          };
+          const newNotification = this.state.notifications;
+          newNotification.unshift(notification);
+          this.setNotifications(newNotification);
+          await AsyncStorage.setItem(
+            "notifications",
+            JSON.stringify(newNotification)
+          );
+        }
+      },
+    } = this;
+    const {
+      addAnimal = async (animal) => {
+        const animals = this.state.animals;
+        animals.unshift(animal);
+        this.setAnimals(animals);
+        await AsyncStorage.setItem("animals", JSON.stringify(animals));
+      },
+    } = this;
 
     return (
       <UserContext.Provider
@@ -198,16 +276,21 @@ class UserProvider extends Component {
           selectedAnimal,
           comments,
           paketi,
+          orders,
           setUsers,
           setLoginUser,
           setNotifications,
           loginAction,
           logoutAction,
+          createPromotionOrder,
+          changeStatusOrder,
+          createOrder,
           selectAnimal,
           likeEvent,
           readNotification,
           updateUser,
           addComment,
+          addAnimal,
         }}
       >
         {children}

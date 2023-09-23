@@ -20,33 +20,31 @@ const EventList = ({ events }) => {
     isLiked.push(name);
   };
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.header}>Events</Text>
-        {events.map((item) => (
-          <View style={styles.events} key={item.name}>
-            <View style={styles.wrapper}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Image
-                source={item.imageSrc.toString()}
-                style={{ width: 200, height: 200 }}
-              />
-            </View>
-            <Text style={styles.description}>{item.description}</Text>
-            <Text style={styles.description}>Likes: {item.num_likes}</Text>
-            <TouchableOpacity
-              onPress={() => like(item.name)}
-              style={styles.likeButton}
-            >
-              <Text style={styles.text}>
-                <FontAwesomeIcon icon={faThumbsUp} style={styles.icon} />
-                Like
-              </Text>
-            </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.header}>Events</Text>
+      {events.map((item) => (
+        <View style={styles.events} key={item.name}>
+          <View style={styles.wrapper}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Image
+              source={item.imageSrc.toString()}
+              style={{ width: 200, height: 200 }}
+            />
           </View>
-        ))}
-      </View>
-    </ScrollView>
+          <Text style={styles.description}>{item.description}</Text>
+          <Text style={styles.description}>Likes: {item.num_likes}</Text>
+          <TouchableOpacity
+            onPress={() => like(item.name)}
+            style={styles.likeButton}
+          >
+            <Text style={styles.text}>
+              <FontAwesomeIcon icon={faThumbsUp} style={styles.icon} />
+              Like
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+    </View>
   );
 };
 
@@ -71,6 +69,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     columnGap: 10,
     minWidth: 300,
+    maxHeight: 480,
   },
   wrapper: {
     paddingBottom: 10,

@@ -62,14 +62,20 @@ const BasicTicket = () => {
 const createInfoAboutPromotionOrder = (name, price) =>
   alert(
     "KUPOVINA",
-    `Uspesno ste obavili kupovinu paketa ${name}, po ceni ${price}$`,
+    `Uspesno ste obavili kupovinu paketa ${name}, po ceni ${price}$, naknadno cete dobiti obavestenje da li su vam ulaznice odobrene`,
     [{ text: "OK", onPress: () => console.log("OK Pressed") }]
   );
 const BuyPromotion = ({ item }) => {
+  const userContext = React.useContext(UserContext);
   const [promoCode, setPromoCode] = useState("");
   const buyTicket = (item) => {
     const price = promoCode === promoCode1 ? item.price * 0.9 : item.price;
-    createInfoAboutOrder(item.name, price);
+    createInfoAboutPromotionOrder(item.name, price);
+    userContext.createPromotionOrder(
+      `Korisnik ${userContext.loginUser?.username} zeli da izvrsi kupovinu promotivnog paketa ${item.name}`,
+      price,
+      userContext.loginUser?.username
+    );
     setPromoCode("");
   };
   return (
@@ -101,12 +107,19 @@ const createInfoAboutOrder = (num, price) =>
     [{ text: "OK", onPress: () => console.log("OK Pressed") }]
   );
 const BuyTicket = () => {
+  const userContext = React.useContext(UserContext);
   const [promoCode, setPromoCode] = useState("");
   const [price, setPrice] = useState(0);
   const [num, setNum] = useState(0);
+
   const buyTicket = () => {
     const newPrice = promoCode === promoCode1 ? price * 0.9 : price;
     createInfoAboutOrder(num, newPrice);
+    userContext.createPromotionOrder(
+      `Korisnik ${userContext.loginUser?.username} zeli da izvrsi kupovinu  ${num} pojedinacnih ulaznica`,
+      price,
+      userContext.loginUser?.username
+    );
     setPromoCode("");
     setPrice(0);
     setNum(0);

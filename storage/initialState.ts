@@ -8,6 +8,7 @@ import {
   Animal,
   Komenatar,
   Paket,
+  Order,
 } from "./types";
 
 const animals: Animal[] = [
@@ -162,12 +163,6 @@ const notification1: Notification = {
   username: "aca",
   description: "Dobro dosli na platformu Zoo Panda",
   read: true,
-  id: 1,
-};
-const notification2: Notification = {
-  username: "aca",
-  description: "Nazalost, vasa porudzbina za 2 pojedinacne karte je odbijena",
-  read: false,
   id: 0,
 };
 const event1: Dogadjaji = {
@@ -226,7 +221,7 @@ const comments: Komenatar[] = [
 ];
 
 const users = [user1, user2, user3, user4];
-const notifications = [notification2, notification1];
+const notifications = [notification1];
 const events = [event1, event2, event3, event4, event5, event6];
 const orders = [];
 
@@ -237,6 +232,7 @@ export const initalLocalStorage = () => {
   AsyncStorage.setItem("animals", JSON.stringify(animals));
   AsyncStorage.setItem("comments", JSON.stringify(comments));
   AsyncStorage.setItem("paketi", JSON.stringify(paketi));
+  AsyncStorage.setItem("orders", JSON.stringify(orders));
 };
 export const getUsers = async (): Promise<User[]> => {
   const users = await AsyncStorage.getItem("users");
@@ -266,6 +262,10 @@ export const getComments = async (): Promise<Komenatar[]> => {
 export const getPaketi = async (): Promise<Paket[]> => {
   const paketi = await AsyncStorage.getItem("paketi");
   return paketi ? (JSON.parse(paketi) as Paket[]) : null;
+};
+export const getOrders = async (): Promise<Order[]> => {
+  const orders = await AsyncStorage.getItem("orders");
+  return orders ? (JSON.parse(orders) as Order[]) : null;
 };
 
 export const getUserByUsername = async (

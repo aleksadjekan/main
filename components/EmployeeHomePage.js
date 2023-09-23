@@ -1,11 +1,13 @@
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import UserContext from "../storage/dataContext";
 import React from "react";
+import OrderList from "../components/OrderList";
 
-const EmployeeHomePage = ({ navigation }) => {
+const EmployeeHomePage = () => {
+  const userContext = React.useContext(UserContext);
   return (
     <View style={styles.container}>
-      <Text>Home Page</Text>
+      <OrderList orders={userContext.orders} />
     </View>
   );
 };
@@ -13,9 +15,12 @@ const EmployeeHomePage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    display: "flex",
     alignItems: "center",
-    padding: 8,
+    padding: 20,
+    paddingTop: 50,
+    backgroundColor: "#fff",
+    overflowY: "auto",
   },
   input: {
     height: 40,
