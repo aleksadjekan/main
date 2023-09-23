@@ -95,21 +95,21 @@ const paketi = [
     description:
       "Uživajte u danu punom zabave za celu porodicu. Ovaj paket uključuje ulaznice za 2 odrasle osobe i 2 dece, kao i besplatno korišćenje vožnje vozićem unutar zoo vrta.",
     price: 80,
-    imageSrc: require("../assets/images/zebra.jpeg"),
+    imageSrc: require("../assets/images/family.jpg"),
   },
   {
     name: "Romantična šetnja",
     description:
       "Provedite nezaboravan dan sa svojim partnerom u našem prelepom zoo vrtu. Ovaj paket uključuje ulaznice za 2 odrasle osobe, romantičnu kočiju vožnju kroz zoo vrt, i piknik korpu sa grickalicama i vinom.",
     price: 120,
-    imageSrc: require("../assets/images/zebra.jpeg"),
+    imageSrc: require("../assets/images/romantic.jpeg"),
   },
   {
     name: "Školsko polje",
     description:
       "Otvorite svet prirode za vaše učenike. Ovaj paket nudi ulaznice za 30 dece i 3 nastavnika, kao i edukativnu turu kroz zoo vrt sa našim stručnim vodičem.",
     price: 200,
-    imageSrc: require("../assets/images/zebra.jpeg"),
+    imageSrc: require("../assets/images/school1.jpeg"),
   },
   // {
   //   name: "Rođendanska zabava",
@@ -160,14 +160,14 @@ const user4: User = {
 };
 const notification1: Notification = {
   username: "aca",
-  notificationType: NotificationMessage.Welcome,
-  read: false,
+  description: "Dobro dosli na platformu Zoo Panda",
+  read: true,
   id: 1,
 };
 const notification2: Notification = {
   username: "aca",
-  notificationType: NotificationMessage.Decline,
-  read: true,
+  description: "Nazalost, vasa porudzbina za 2 pojedinacne karte je odbijena",
+  read: false,
   id: 0,
 };
 const event1: Dogadjaji = {
@@ -226,8 +226,9 @@ const comments: Komenatar[] = [
 ];
 
 const users = [user1, user2, user3, user4];
-const notifications = [notification1, notification2];
+const notifications = [notification2, notification1];
 const events = [event1, event2, event3, event4, event5, event6];
+const orders = [];
 
 export const initalLocalStorage = () => {
   AsyncStorage.setItem("users", JSON.stringify(users));

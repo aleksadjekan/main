@@ -39,7 +39,7 @@ const Paketi = ({ paketi }) => {
         <Text style={styles.name}>{item.name}</Text>
         <Image
           source={item.imageSrc.toString()}
-          style={{ width: 300, height: 120 }}
+          style={{ width: 300, height: 200 }}
         />
         <BuyPromotion item={item} />
       </View>

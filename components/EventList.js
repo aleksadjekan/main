@@ -24,7 +24,7 @@ const EventList = ({ events }) => {
       <View style={styles.container}>
         <Text style={styles.header}>Events</Text>
         {events.map((item) => (
-          <View style={styles.events}>
+          <View style={styles.events} key={item.name}>
             <View style={styles.wrapper}>
               <Text style={styles.name}>{item.name}</Text>
               <Image

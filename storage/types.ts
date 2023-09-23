@@ -24,7 +24,7 @@ export enum UserType {
   Employee,
 }
 export type Notification = {
-  notificationType: NotificationMessage;
+  description: string;
   username: string;
   read: boolean;
   id: number;
@@ -57,3 +57,15 @@ export type Ticket = {
   username: string;
   numberOfTicket: number;
 };
+
+export type Order = {
+  description: string;
+  price: string;
+  username: string;
+  orderStatus: OrderStatus;
+};
+export enum OrderStatus {
+  NOT_ANSWERED,
+  CONFIRMED,
+  DECLINED,
+}
