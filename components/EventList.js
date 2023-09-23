@@ -10,15 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons/faThumbsUp";
 import UserContext from "../storage/dataContext";
-
-import zoo1 from "../assets/images/zoo1.jpeg";
-import zoo2 from "../assets/images/zoo2.jpeg";
-import zoo3 from "../assets/images/zoo3.jpeg";
-import zoo4 from "../assets/images/zoo4.jpeg";
-import zoo5 from "../assets/images/zoo5.jpeg";
-import zoo6 from "../assets/images/zoo6.jpeg";
-
-const zooImages = [zoo1, zoo2, zoo3, zoo4, zoo5, zoo6];
+import { ScrollView } from "react-native-gesture-handler";
 
 const EventList = ({ events }) => {
   const userContext = React.useContext(UserContext);
@@ -28,37 +20,33 @@ const EventList = ({ events }) => {
     isLiked.push(name);
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Events</Text>
-      <FlatList
-        data={events}
-        renderItem={({ item, index }) => (
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.header}>Events</Text>
+        {events.map((item) => (
           <View style={styles.events}>
             <View style={styles.wrapper}>
               <Text style={styles.name}>{item.name}</Text>
               <Image
-                source={{ uri: zooImages[index] }}
+                source={item.imageSrc.toString()}
                 style={{ width: 200, height: 200 }}
               />
             </View>
-            <View>
-              <Text style={styles.description}>{item.description}</Text>
-              <Text style={styles.description}>Likes: {item.num_likes}</Text>
-              <TouchableOpacity
-                onPress={() => like(item.name)}
-                style={styles.likeButton}
-              >
-                <Text style={styles.text}>
-                  <FontAwesomeIcon icon={faThumbsUp} style={styles.icon} />
-                  Like
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.description}>{item.description}</Text>
+            <Text style={styles.description}>Likes: {item.num_likes}</Text>
+            <TouchableOpacity
+              onPress={() => like(item.name)}
+              style={styles.likeButton}
+            >
+              <Text style={styles.text}>
+                <FontAwesomeIcon icon={faThumbsUp} style={styles.icon} />
+                Like
+              </Text>
+            </TouchableOpacity>
           </View>
-        )}
-        keyExtractor={(item) => item.name}
-      />
-    </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -81,31 +69,28 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     display: "flex",
     alignItems: "center",
-    flexDirection: "row",
     columnGap: 10,
-    minWidth: "300px",
+    minWidth: 300,
   },
   wrapper: {
-    borderRightColor: "black",
-    borderRightWidth: "1px",
-    paddingRight: "10px",
+    paddingBottom: 10,
   },
   name: {
     fontWeight: "bold",
-    width: "200px",
+    width: 200,
   },
   description: {
     flex: 3,
-    paddingLeft: "10px",
-    maxWidth: "800px",
+    paddingLeft: 10,
+    maxWidth: 800,
   },
   timestamp: {
     color: "#888888",
     marginTop: 5,
   },
   likeButton: {
-    marginTop: "50px",
-    marginLeft: "10px",
+    marginTop: 50,
+    marginLeft: 10,
   },
   icon: {
     color: "rgb(25, 171, 255)",
@@ -115,6 +100,7 @@ const styles = StyleSheet.create({
     color: "rgb(25, 171, 255)",
     display: "flex",
     alignItems: "center",
+    gap: 5,
   },
 });
 

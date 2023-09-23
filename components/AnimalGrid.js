@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import UserContext from "../storage/dataContext";
@@ -13,14 +14,20 @@ import UserContext from "../storage/dataContext";
 const AnimalGrid = () => {
   const userContext = React.useContext(UserContext);
   const navigation = useNavigation();
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [page, setPage] = useState(1);
+  const itemToShow = 2;
 
   const imageData = userContext.animals;
   const clickOnAnimal = (item) => {
     userContext.selectAnimal(item);
     navigation.navigate("Animal");
   };
-
+  const showMore = () => {
+    setPage(page + 1);
+  };
+  const lesPage = () => {
+    setPage(page > 1 ? page - 1 : 1);
+  };
   const renderImage = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -28,7 +35,7 @@ const AnimalGrid = () => {
       }}
       style={styles.imageWrapper}
     >
-      <Image source={{ uri: item.url }} style={{ width: 200, height: 200 }} />
+      <Image source={item.url.toString()} style={{ width: 300, height: 300 }} />
       <Text>{item.title}</Text>
     </TouchableOpacity>
   );
@@ -36,11 +43,40 @@ const AnimalGrid = () => {
   return (
     <View>
       <FlatList
-        data={imageData}
+        data={imageData.slice((page - 1) * itemToShow, page * itemToShow)}
         keyExtractor={(item) => item.id}
         renderItem={renderImage}
-        numColumns={3}
+        numColumns={1}
       />
+      {Platform.OS === "web" ? (
+        <View style={styles.pagination}>
+          {page > 1 ? (
+            <TouchableOpacity
+              onPress={() => {
+                lesPage();
+              }}
+            >
+              <Text style={styles.paginationText}>Previous Page</Text>
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
+          {page < imageData.length / 2 - 1 ? (
+            <TouchableOpacity
+              style={styles.nextPage}
+              onPress={() => {
+                showMore();
+              }}
+            >
+              <Text style={styles.paginationText}>Next Page</Text>
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
+        </View>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
@@ -61,6 +97,18 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     borderRadius: 8,
+  },
+  pagination: {
+    marginTop: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  nextPage: {
+    marginLeft: "auto",
+  },
+  paginationText: {
+    textDecorationLine: "underline",
   },
 });
 

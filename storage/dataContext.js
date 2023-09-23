@@ -10,6 +10,8 @@ import {
   setLoggedInUser,
 } from "./initialState";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserType } from "./types";
+import { Platform } from "react-native";
 
 export const UserContext = React.createContext(null);
 
@@ -75,6 +77,9 @@ class UserProvider extends Component {
 
   async loginAction(user) {
     if (typeof user !== "undefined") {
+      if (user.userType === UserType.Employee && Platform.OS !== "web") {
+        return false;
+      }
       await AsyncStorage.setItem("loginUser", JSON.stringify(user));
       const response = await setLoggedInUser(user);
       if (response) {

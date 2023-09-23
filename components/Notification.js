@@ -8,14 +8,18 @@ const Notification = () => {
 
   return (
     <View style={styles.container}>
-      <NotificationList notifications={userContext.notifications} />
+      <NotificationList
+        notifications={userContext.notifications.filter(
+          (not) => not.username === userContext.loginUser.username
+        )}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    width: "300px",
+    width: 300,
   },
   container: {
     flex: 1,

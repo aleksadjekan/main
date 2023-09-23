@@ -9,7 +9,7 @@ export type User = {
 };
 export type Animal = {
   id: string;
-  url: any;
+  url: string;
   title: string;
   description: string;
 };
@@ -40,6 +40,6 @@ export enum NotificationMessage {
 export type Dogadjaji = {
   description: string;
   name: string;
-  image_src: string;
+  imageSrc: string;
   num_likes: number;
 };

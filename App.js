@@ -14,6 +14,7 @@ import UpdatePassword from "./components/UpdatePassword";
 import LogoutHeader from "./components/LogoutHeader";
 import UserContext, { UserProvider } from "./storage/dataContext";
 import { initalLocalStorage } from "./storage/initialState";
+import { UserType } from "./storage/types";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -22,7 +23,6 @@ initalLocalStorage();
 
 class App extends React.Component {
   static contextType = UserContext;
-
   render() {
     const context = this.context;
     return (
@@ -35,16 +35,32 @@ class App extends React.Component {
 
 function HomeStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="HomePage"
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen
+        name="Home"
         component={HomePage}
         options={{
           title: "Home Page",
           headerRight: () => <LogoutHeader />,
         }}
       />
-      <Stack.Screen
+      <Drawer.Screen
+        name="Animals"
+        component={Animals}
+        options={{
+          title: "Animals",
+          headerRight: () => <LogoutHeader />,
+        }}
+      />
+      <Drawer.Screen
+        name="Events"
+        component={Events}
+        options={{
+          title: "Events",
+          headerRight: () => <LogoutHeader />,
+        }}
+      />
+      <Drawer.Screen
         name="ContactInfo"
         component={ContactInfo}
         options={{
@@ -52,91 +68,60 @@ function HomeStack() {
           headerRight: () => <LogoutHeader />,
         }}
       />
-    </Stack.Navigator>
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: "Profile",
+          headerRight: () => <LogoutHeader />,
+        }}
+      />
+      <Drawer.Screen
+        name="UpdatePassword"
+        component={UpdatePassword}
+        options={{
+          title: "Change Password",
+          headerRight: () => <LogoutHeader />,
+        }}
+      />
+      <Drawer.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          drawerItemStyle: { height: 0 },
+          title: "Notification",
+          headerRight: () => <LogoutHeader />,
+        }}
+      />
+      <Drawer.Screen
+        name="Animal"
+        component={Animal}
+        options={{
+          drawerItemStyle: { height: 0 },
+          title: "Animal",
+          headerRight: () => <LogoutHeader />,
+        }}
+      />
+    </Drawer.Navigator>
   );
 }
 
 function MyNavigation() {
+  const linking = {
+    screens: {},
+  };
   const userContext = React.useContext(UserContext);
   const logged =
     userContext.loginUser !== null &&
     Object.keys(userContext.loginUser).length !== 0;
-  const linking = {
-    screens: {},
-  };
+
+  const isEmployee =
+    userContext.loginUser !== null &&
+    userContext.loginUser.userType === UserType.Employee;
   return (
     <NavigationContainer linking={linking}>
       {logged ? (
-        <>
-          <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen
-              name="Home"
-              component={HomePage}
-              options={{
-                title: "Home Page",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-            <Drawer.Screen
-              name="Events"
-              component={Events}
-              options={{
-                title: "Events",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-            <Drawer.Screen
-              name="Animals"
-              component={Animals}
-              options={{
-                title: "Animals",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-            <Drawer.Screen
-              name="ContactInfo"
-              component={ContactInfo}
-              options={{
-                title: "Contact",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-            <Drawer.Screen
-              name="Profile"
-              component={Profile}
-              options={{
-                title: "Profile",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-            <Drawer.Screen
-              name="UpdatePassword"
-              component={UpdatePassword}
-              options={{
-                title: "Change Password",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-            <Drawer.Screen
-              name="Notification"
-              component={Notification}
-              options={{
-                drawerItemStyle: { height: 0 },
-                title: "Notification",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-            <Drawer.Screen
-              name="Animal"
-              component={Animal}
-              options={{
-                drawerItemStyle: { height: 0 },
-                title: "Animal",
-                headerRight: () => <LogoutHeader />,
-              }}
-            />
-          </Drawer.Navigator>
-        </>
+        <HomeStack />
       ) : (
         <>
           <Stack.Navigator>

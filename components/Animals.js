@@ -12,7 +12,7 @@ const Animals = () => {
 
 const styles = StyleSheet.create({
   card: {
-    width: "300px",
+    width: 300,
   },
   container: {
     flex: 1,

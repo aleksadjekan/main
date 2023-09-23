@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import UserContext from "../storage/dataContext";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Animals = () => {
   const userContext = React.useContext(UserContext);
@@ -24,45 +25,45 @@ const Animals = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{userContext.selectedAnimal?.title}</Text>
-      <Image
-        source={{ uri: userContext.selectedAnimal?.url }}
-        style={{ width: 300, height: 300 }}
-      />
-      <Text style={{ width: 300, marginTop: 20 }}>
-        {userContext.selectedAnimal?.description}
-      </Text>
-      <View style={styles.addComment}>
-        <TextInput
-          placeholder="Add your comment"
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-          multiline
-          style={styles.commentInput}
+      <ScrollView>
+        <Text>{userContext.selectedAnimal?.title}</Text>
+        <Image
+          source={userContext.selectedAnimal?.url.toString()}
+          style={{ width: 300, height: 300 }}
         />
-        <TouchableOpacity style={styles.comment} onPress={handleSubmit}>
-          <Text style={styles.commentText}>Comment</Text>
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={userContext.comments.filter(
-          (comment) => comment.animal_id === userContext.selectedAnimal?.id
-        )}
-        renderItem={({ item }) => (
-          <View style={styles.comments}>
-            <Text style={styles.username}>{item.username}</Text>
-            <Text>{item.description}</Text>
-          </View>
-        )}
-        keyExtractor={(item) => item.description}
-      />
+        <Text style={{ width: 300, marginTop: 20 }}>
+          {userContext.selectedAnimal?.description}
+        </Text>
+        <View style={styles.addComment}>
+          <TextInput
+            placeholder="Add your comment"
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            multiline
+            style={styles.commentInput}
+          />
+          <TouchableOpacity style={styles.comment} onPress={handleSubmit}>
+            <Text style={styles.commentText}>Comment</Text>
+          </TouchableOpacity>
+        </View>
+        {userContext.comments
+          .filter(
+            (comment) => comment.animal_id === userContext.selectedAnimal?.id
+          )
+          .map((item) => (
+            <View style={styles.comments}>
+              <Text style={styles.username}>{item.username}</Text>
+              <Text>{item.description}</Text>
+            </View>
+          ))}
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    width: "300px",
+    width: 300,
   },
   container: {
     display: "flex",
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     columnGap: 10,
-    width: "300px",
+    width: 300,
   },
   username: {
     fontWeight: "bold",
@@ -108,8 +109,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: "300px",
-    marginTop: "20px",
+    width: 300,
+    marginTop: 20,
   },
   comment: {
     marginLeft: 10,

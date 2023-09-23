@@ -11,7 +11,6 @@ const LogoutHeader = () => {
   const userContext = React.useContext(UserContext);
   const handleLogout = async () => {
     await userContext.logoutAction();
-    navigation.navigate("HomePage");
   };
   const goToNotification = () => {
     navigation.navigate("Notification");

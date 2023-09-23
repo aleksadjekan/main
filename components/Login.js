@@ -15,9 +15,7 @@ const Login = ({ navigation }) => {
       (user) => user.username === username && user.password === password
     );
     const response = await userContext.loginAction(users[idx]);
-    if (response) {
-      navigation.navigate("HomePage");
-    } else {
+    if (!response) {
       setError("Wrong credentials!");
     }
   };
