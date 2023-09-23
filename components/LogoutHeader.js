@@ -5,10 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons/faSignOut";
 import { faBell } from "@fortawesome/free-solid-svg-icons/faBell";
 import { useNavigation } from "@react-navigation/native";
+import { UserType } from "../storage/types";
 
 const LogoutHeader = () => {
   const navigation = useNavigation();
   const userContext = React.useContext(UserContext);
+  const isEmployee =
+    userContext.loginUser !== null &&
+    userContext.loginUser.userType === UserType.Employee;
+
   const handleLogout = async () => {
     await userContext.logoutAction();
   };
@@ -18,11 +23,15 @@ const LogoutHeader = () => {
 
   return (
     <View style={styles.dropdown}>
-      <TouchableOpacity style={styles.header} onPress={goToNotification}>
-        <Text style={styles.logoutText}>
-          <FontAwesomeIcon icon={faBell} />
-        </Text>
-      </TouchableOpacity>
+      {!isEmployee ? (
+        <TouchableOpacity style={styles.header} onPress={goToNotification}>
+          <Text style={styles.logoutText}>
+            <FontAwesomeIcon icon={faBell} />
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <></>
+      )}
       <TouchableOpacity style={styles.header} onPress={handleLogout}>
         <Text style={styles.logoutText}>
           <FontAwesomeIcon icon={faSignOut} /> Logout

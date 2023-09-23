@@ -43,3 +43,17 @@ export type Dogadjaji = {
   imageSrc: string;
   num_likes: number;
 };
+
+export type Paket = {
+  name: string;
+  description: string;
+  price: number;
+  imageSrc: string;
+};
+
+export type Ticket = {
+  name: string;
+  price: string;
+  username: string;
+  numberOfTicket: number;
+};

@@ -5,6 +5,7 @@ import {
   getEvents,
   getLoggedInUser,
   getNotifications,
+  getPaketi,
   getSelectedAnimal,
   getUsers,
   setLoggedInUser,
@@ -25,6 +26,7 @@ class UserProvider extends Component {
     animals: [],
     selectedAnimal: null,
     comments: [],
+    paketi: [],
   };
 
   // Method to update state
@@ -49,6 +51,9 @@ class UserProvider extends Component {
   setComments = (comments) => {
     this.setState({ ...this.state, comments: comments });
   };
+  setPaketi = (paketi) => {
+    this.setState({ ...this.state, paketi: paketi });
+  };
 
   async syncUsersWithStorage() {
     const users = await getUsers();
@@ -58,6 +63,7 @@ class UserProvider extends Component {
     const animals = await getAnimals();
     const selectedAnimal = await getSelectedAnimal();
     const comments = await getComments();
+    const paketi = await getPaketi();
 
     if (loginUser !== null) this.setLoginUser(loginUser);
     this.setState({
@@ -68,6 +74,7 @@ class UserProvider extends Component {
       animals: animals,
       selectedAnimal: selectedAnimal,
       comments: comments,
+      paketi: paketi,
     });
   }
 
@@ -105,6 +112,7 @@ class UserProvider extends Component {
       animals,
       selectedAnimal,
       comments,
+      paketi,
     } = this.state;
     const {
       setUsers,
@@ -189,6 +197,7 @@ class UserProvider extends Component {
           animals,
           selectedAnimal,
           comments,
+          paketi,
           setUsers,
           setLoginUser,
           setNotifications,

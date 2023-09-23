@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Login from "./components/Login";
 import HomePage from "./components/HomePage";
+import EmployeeHomePage from "./components/EmployeeHomePage";
 import ContactInfo from "./components/ContactInfo";
 import Events from "./components/Events";
 import Animals from "./components/Animals";
@@ -34,37 +35,56 @@ class App extends React.Component {
 }
 
 function HomeStack() {
+  const userContext = React.useContext(UserContext);
+  const isEmployee =
+    userContext.loginUser !== null &&
+    userContext.loginUser.userType === UserType.Employee;
   return (
     <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen
-        name="Home"
-        component={HomePage}
-        options={{
-          title: "Home Page",
-          headerRight: () => <LogoutHeader />,
-        }}
-      />
+      {!isEmployee ? (
+        <>
+          <Drawer.Screen
+            name="Home"
+            component={HomePage}
+            options={{
+              title: "Home Page",
+              headerRight: () => <LogoutHeader />,
+            }}
+          />
+          <Drawer.Screen
+            name="Events"
+            component={Events}
+            options={{
+              title: "Events",
+              headerRight: () => <LogoutHeader />,
+            }}
+          />
+          <Drawer.Screen
+            name="ContactInfo"
+            component={ContactInfo}
+            options={{
+              title: "Contact",
+              headerRight: () => <LogoutHeader />,
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Drawer.Screen
+            name="Home"
+            component={EmployeeHomePage}
+            options={{
+              title: "Home Page",
+              headerRight: () => <LogoutHeader />,
+            }}
+          />
+        </>
+      )}
       <Drawer.Screen
         name="Animals"
         component={Animals}
         options={{
           title: "Animals",
-          headerRight: () => <LogoutHeader />,
-        }}
-      />
-      <Drawer.Screen
-        name="Events"
-        component={Events}
-        options={{
-          title: "Events",
-          headerRight: () => <LogoutHeader />,
-        }}
-      />
-      <Drawer.Screen
-        name="ContactInfo"
-        component={ContactInfo}
-        options={{
-          title: "Contact",
           headerRight: () => <LogoutHeader />,
         }}
       />
@@ -115,9 +135,6 @@ function MyNavigation() {
     userContext.loginUser !== null &&
     Object.keys(userContext.loginUser).length !== 0;
 
-  const isEmployee =
-    userContext.loginUser !== null &&
-    userContext.loginUser.userType === UserType.Employee;
   return (
     <NavigationContainer linking={linking}>
       {logged ? (

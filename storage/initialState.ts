@@ -7,6 +7,7 @@ import {
   Dogadjaji,
   Animal,
   Komenatar,
+  Paket,
 } from "./types";
 
 const animals: Animal[] = [
@@ -87,6 +88,36 @@ const animals: Animal[] = [
     description:
       "Kornjača je vodozemac sa tvrdim oklopom koji štiti njen unutrašnji deo tela. Kornjače često žive u vodi, ali postoje i kopnene vrste.",
   },
+];
+const paketi = [
+  {
+    name: "Porodična avantura",
+    description:
+      "Uživajte u danu punom zabave za celu porodicu. Ovaj paket uključuje ulaznice za 2 odrasle osobe i 2 dece, kao i besplatno korišćenje vožnje vozićem unutar zoo vrta.",
+    price: 80,
+    imageSrc: require("../assets/images/zebra.jpeg"),
+  },
+  {
+    name: "Romantična šetnja",
+    description:
+      "Provedite nezaboravan dan sa svojim partnerom u našem prelepom zoo vrtu. Ovaj paket uključuje ulaznice za 2 odrasle osobe, romantičnu kočiju vožnju kroz zoo vrt, i piknik korpu sa grickalicama i vinom.",
+    price: 120,
+    imageSrc: require("../assets/images/zebra.jpeg"),
+  },
+  {
+    name: "Školsko polje",
+    description:
+      "Otvorite svet prirode za vaše učenike. Ovaj paket nudi ulaznice za 30 dece i 3 nastavnika, kao i edukativnu turu kroz zoo vrt sa našim stručnim vodičem.",
+    price: 200,
+    imageSrc: require("../assets/images/zebra.jpeg"),
+  },
+  // {
+  //   name: "Rođendanska zabava",
+  //   description:
+  //     "Proslavite rođendan svog deteta u našem zoo vrtu. Ovaj paket uključuje ulaznice za 10 dece i 2 odrasle osobe, kao i rođendansku tortu i balone.",
+  //   price: 150,
+  //   imageSrc: require("../assets/images/zebra.jpeg"),
+  // },
 ];
 
 const user1: User = {
@@ -204,6 +235,7 @@ export const initalLocalStorage = () => {
   AsyncStorage.setItem("events", JSON.stringify(events));
   AsyncStorage.setItem("animals", JSON.stringify(animals));
   AsyncStorage.setItem("comments", JSON.stringify(comments));
+  AsyncStorage.setItem("paketi", JSON.stringify(paketi));
 };
 export const getUsers = async (): Promise<User[]> => {
   const users = await AsyncStorage.getItem("users");
@@ -229,6 +261,10 @@ export const getSelectedAnimal = async (): Promise<Animal> => {
 export const getComments = async (): Promise<Komenatar[]> => {
   const comments = await AsyncStorage.getItem("comments");
   return comments ? (JSON.parse(comments) as Komenatar[]) : null;
+};
+export const getPaketi = async (): Promise<Paket[]> => {
+  const paketi = await AsyncStorage.getItem("paketi");
+  return paketi ? (JSON.parse(paketi) as Paket[]) : null;
 };
 
 export const getUserByUsername = async (
