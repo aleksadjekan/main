@@ -14,7 +14,7 @@ import UserContext from "../storage/dataContext";
 const AnimalGrid = () => {
   const userContext = React.useContext(UserContext);
   const navigation = useNavigation();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState();
   const itemToShow = 2;
 
   const imageData = userContext.animals;
@@ -43,7 +43,11 @@ const AnimalGrid = () => {
   return (
     <View>
       <FlatList
-        data={imageData.slice((page - 1) * itemToShow, page * itemToShow)}
+        data={
+          Platform.OS === "web"
+            ? imageData.slice((page - 1) * itemToShow, page * itemToShow)
+            : imageData
+        }
         keyExtractor={(item) => item.id}
         renderItem={renderImage}
         numColumns={1}
